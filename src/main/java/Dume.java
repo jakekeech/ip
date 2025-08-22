@@ -120,6 +120,12 @@ public class Dume {
                     tasks.add(t);
                     say("Got it. I've added this task:\n  " + t + "\nNow you have " + tasks.size() + " tasks in the list.");
 
+                } else if (lc.equals("delete")) {
+                    throw new DumeException("Please give a task number after 'delete'!");
+                } else if (lc.startsWith("delete ")) {
+                    int id = parseIndex(cmd.substring(7), tasks.size());
+                    Task removed = tasks.remove(id);
+                    say("Noted. I've removed this task:\n  " + removed + "\nNow you have " + tasks.size() + " task" + (tasks.size() == 1 ? "" : "s") + " in the list.");
                 } else {
                     throw new DumeException("Sorry! I don't understand!");
                 }
