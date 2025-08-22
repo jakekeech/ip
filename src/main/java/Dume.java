@@ -1,6 +1,4 @@
-import java.util.Scanner;
-import java.util.List;
-import java.util.ArrayList;
+import java.util.*;
 
 public class Dume {
     public static void main(String[] args) {
@@ -19,7 +17,7 @@ public class Dume {
         System.out.println(logo);
         System.out.println("What can I do for you?");
 
-        List<String> tasks = new ArrayList<>();
+        List<Task> tasks = new ArrayList<>();
         Scanner sc = new Scanner(System.in);
 
         while (true) {
@@ -30,6 +28,21 @@ public class Dume {
                 System.out.println("Bye. Hope to see you again soon!");
                 System.out.println(line);
                 break;
+            } else if (input.toLowerCase().startsWith("mark ")) {
+                int id = Integer.parseInt(input.substring(5).trim()) - 1;
+                Task task = tasks.get(id);
+                task.mark();
+                System.out.println("Nice! I've marked this task as done:");
+                System.out.println(" " + task);
+                System.out.println(line);
+            } else if (input.toLowerCase().startsWith("unmark ")) {
+                int id = Integer.parseInt(input.substring(7).trim()) - 1;
+                Task task = tasks.get(id);
+                task.unmark();
+                System.out.println(line);
+                System.out.println("OK, I've marked this task as not done yet:");
+                System.out.println(" " + task);
+                System.out.println(line);
             } else if (input.equalsIgnoreCase("list")) {
                 System.out.println(line);
                 if (!tasks.isEmpty()) {
@@ -41,7 +54,8 @@ public class Dume {
                 }
                 System.out.println(line);
             } else {
-                tasks.add(input);
+                Task task = new Task(input);
+                tasks.add(task);
                 System.out.println(line);
                 System.out.println("Added: " + input);
                 System.out.println(line);

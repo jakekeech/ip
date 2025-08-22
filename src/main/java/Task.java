@@ -7,8 +7,12 @@ public class Task {
         this.done = false;
     }
 
-    public void complete() {
+    public void mark() {
         this.done = true;
+    }
+
+    public void unmark() {
+        this.done = false;
     }
 
     public String statusIcon() {
@@ -17,7 +21,7 @@ public class Task {
 
     @Override
     public String toString() {
-        return "[" + statusIcon() + "]" + details;
+        return "[" + statusIcon() + "] " + details;
     }
 
 }
