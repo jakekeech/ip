@@ -13,6 +13,6 @@ public class Deadline extends Task{
 
     @Override
     public String toFileFormat() {
-        return "T | " + (done ? "1" : "0") + " | " + details;
+        return "D | " + (done ? "1" : "0") + " | " + details + " | " + by;
     }
 }
