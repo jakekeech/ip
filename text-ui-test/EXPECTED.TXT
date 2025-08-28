@@ -9,17 +9,17 @@ Hello! I'm DUM-E
 
 What can I do for you?
 ____________________________________________________________
-Got it. I've added this task:
+Got it. I've added this dume.task:
  [T][ ] eat lunch
 Now you have 1 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
-Got it. I've added this task:
+Got it. I've added this dume.task:
  [D][ ] eat dinner (by: 22 aug)
 Now you have 2 tasks in the list.
 ____________________________________________________________
 ____________________________________________________________
-Got it. I've added this task:
+Got it. I've added this dume.task:
  [E][ ] meeting (from: 23 aug 2pm to: 25 aug 10pm)
 Now you have 3 tasks in the list.
 ____________________________________________________________
@@ -28,11 +28,11 @@ ____________________________________________________________
 2. [D][ ] eat dinner (by: 22 aug)
 3. [E][ ] meeting (from: 23 aug 2pm to: 25 aug 10pm)
 ____________________________________________________________
-Nice! I've marked this task as done:
+Nice! I've marked this dume.task as done:
  [D][X] eat dinner (by: 22 aug)
 ____________________________________________________________
 ____________________________________________________________
-OK, I've marked this task as not done yet:
+OK, I've marked this dume.task as not done yet:
  [D][ ] eat dinner (by: 22 aug)
 ____________________________________________________________
 ____________________________________________________________

@@ -1,4 +1,12 @@
-import java.util.*;
+package dume;
+
+import dume.parser.Parser;
+import dume.storage.Storage;
+import dume.task.Task;
+import dume.task.TaskList;
+import dume.ui.Ui;
+
+import java.util.Scanner;
 
 public class Dume {
 

@@ -1,3 +1,7 @@
+package dume.task;
+
+import dume.util.DateTimeHelper;
+
 public class Event extends Task {
     private final String start;
     private final String end;

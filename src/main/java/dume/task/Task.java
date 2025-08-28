@@ -1,3 +1,5 @@
+package dume.task;
+
 public abstract class Task {
     protected final String details;
     protected boolean done;

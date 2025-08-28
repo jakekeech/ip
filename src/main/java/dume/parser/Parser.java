@@ -1,3 +1,14 @@
+package dume.parser;
+
+import dume.DumeException;
+import dume.storage.Storage;
+import dume.task.Deadline;
+import dume.task.Event;
+import dume.task.Task;
+import dume.task.TaskList;
+import dume.task.Todo;
+import dume.ui.Ui;
+
 import java.util.Objects;
 
 public class Parser {
