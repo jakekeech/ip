@@ -1,2 +1,3 @@
-T | 0 | catch fish
-T | 0 | eat fish
+T | 0 | eat cow
+T | 0 | eat cow
+T | 0 | eat cow
