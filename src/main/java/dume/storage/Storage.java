@@ -1,5 +1,19 @@
-import java.io.*;
-import java.util.*;
+package dume.storage;
+
+import dume.task.Deadline;
+import dume.task.Event;
+import dume.task.Task;
+import dume.task.Todo;
+
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 
 public class Storage {
     private final String filePath;

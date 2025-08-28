@@ -1,3 +1,7 @@
+package dume.ui;
+
+import dume.task.Task;
+
 import java.util.List;
 
 public class Ui {
