@@ -38,6 +38,9 @@ public class Dume {
     }
 
     public static void main(String[] args) {
+        Storage storage = new Storage("data/dume.txt");
+        List<Task> tasks = storage.load();
+
         String logo = """
      ______   __   __  __   __         _______
     |      | |  | |  ||  |_|  |       |       |
@@ -53,7 +56,6 @@ public class Dume {
         System.out.println(logo);
         System.out.println("What can I do for you?");
 
-        List<Task> tasks = new ArrayList<>();
         Scanner sc = new Scanner(System.in);
 
         while (true) {
@@ -63,6 +65,7 @@ public class Dume {
 
             try {
                 if (lc.equals("bye")) {
+                    storage.save(tasks);
                     say("Bye. Hope to see you again soon!");
                     break;
                 } else if (lc.equals("mark")) {
@@ -70,12 +73,14 @@ public class Dume {
                 } else if (lc.startsWith("mark ")) {
                     int id = parseIndex(cmd.substring(5), tasks.size());
                     tasks.get(id).mark();
+                    storage.save(tasks);
                     say("Nice! I've marked this task as done:\n  " + tasks.get(id));
                 } else if (lc.equals("unmark")) {
                     throw new DumeException("Please give a task number after 'unmark'!");
                 } else if (lc.startsWith("unmark ")) {
                     int id = parseIndex(cmd.substring(7), tasks.size());
                     tasks.get(id).unmark();
+                    storage.save(tasks);
                     say("OK, I've marked this task as not done yet:\n  " + tasks.get(id));
                 }
                 else if (lc.equals("list")) {
@@ -93,6 +98,7 @@ public class Dume {
                     checkNonEmpty(details, "a todo");
                     Task t = new Todo(details);
                     tasks.add(t);
+                    storage.save(tasks);
                     say("Got it. I've added this task:\n  " + t + "\nNow you have " + tasks.size() + " tasks in the list.");
                 } else if (lc.startsWith("deadline")) {
                     String rest = (cmd.length() > 8) ? cmd.substring(8).trim() : "";
@@ -104,6 +110,7 @@ public class Dume {
                     checkNonEmpty(by, "the /by time");
                     Task t = new Deadline(details, by);
                     tasks.add(t);
+                    storage.save(tasks);
                     say("Got it. I've added this task:\n  " + t + "\nNow you have " + tasks.size() + " tasks in the list.");
                 } else if (lc.startsWith("event")) {
                     String rest = (cmd.length() > 5) ? cmd.substring(5).trim() : "";
@@ -118,6 +125,7 @@ public class Dume {
                     checkNonEmpty(to, "the /to time");
                     Task t = new Event(details, from, to);
                     tasks.add(t);
+                    storage.save(tasks);
                     say("Got it. I've added this task:\n  " + t + "\nNow you have " + tasks.size() + " tasks in the list.");
 
                 } else if (lc.equals("delete")) {
@@ -125,6 +133,7 @@ public class Dume {
                 } else if (lc.startsWith("delete ")) {
                     int id = parseIndex(cmd.substring(7), tasks.size());
                     Task removed = tasks.remove(id);
+                    storage.save(tasks);
                     say("Noted. I've removed this task:\n  " + removed + "\nNow you have " + tasks.size() + " task" + (tasks.size() == 1 ? "" : "s") + " in the list.");
                 } else {
                     throw new DumeException("Sorry! I don't understand!");
