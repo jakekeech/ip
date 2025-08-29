@@ -18,6 +18,22 @@ public class TaskList {
     }
 
     /**
+     * Finds all tasks whose details contain the given query (case-insensitive).
+     *
+     * @param query the keyword to search for
+     * @return a list of matching tasks; empty if none found
+     */
+    public List<Task> find(String query) {
+        List<Task> out = new ArrayList<>();
+        for (Task task : tasks) {
+            if (task.matches(query)) {
+                out.add(task);
+            }
+        }
+        return out;
+    }
+
+    /**
      * Creates a TaskList initialized with existing tasks.
      *
      * @param initial initial list of tasks
