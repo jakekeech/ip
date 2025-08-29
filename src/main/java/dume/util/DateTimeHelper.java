@@ -4,6 +4,11 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
+
+/**
+ * Utility class for converting raw date-time strings into
+ * user-friendly formats.
+ */
 public class DateTimeHelper {
     private DateTimeHelper() {}
 

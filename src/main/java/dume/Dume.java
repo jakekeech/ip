@@ -8,6 +8,10 @@ import dume.ui.Ui;
 
 import java.util.Scanner;
 
+/**
+ * Entry point of application.
+ * Initializes UI, storage, and task list before starting command loop.
+ */
 public class Dume {
 
     public static void main(String[] args) {
