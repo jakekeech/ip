@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
  * A wrapper around a list of tasks, providing higher-level operations
  * such as add, remove, and retrieval by index.
  */

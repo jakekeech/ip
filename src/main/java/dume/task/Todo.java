@@ -1,7 +1,7 @@
 package dume.task;
 
 /**
- * Represents a task of type Todo
+ * Represents a simple task with no specific time constraints.
  */
 public class Todo extends Task {
     /**
