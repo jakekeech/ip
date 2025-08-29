@@ -11,9 +11,20 @@ import dume.ui.Ui;
 
 import java.util.Objects;
 
+/**
+ * Parses user input and executes the corresponding commands.
+ */
 public class Parser {
 
-    // returns true if user wants to exit
+    /**
+     * Processes a raw user command.
+     *
+     * @param raw user input string
+     * @param tasks task list to operate on
+     * @param ui user interface for output
+     * @param storage storage for saving tasks
+     * @return true if the user wants to exit, false otherwise
+     */
     public static boolean process(String raw, TaskList tasks, Ui ui, Storage storage) {
         String cmd = Objects.requireNonNullElse(raw, "").trim();
         String lc = cmd.toLowerCase();

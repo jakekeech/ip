@@ -14,14 +14,26 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-
+/**
+ * Handles reading from and writing to the save file for tasks.
+ */
 public class Storage {
     private final String filePath;
 
+    /**
+     * Creates a new Storage tied to a file path.
+     *
+     * @param filePath path to the save file
+     */
     public Storage(String filePath) {
         this.filePath = filePath;
     }
 
+    /**
+     * Loads tasks from the save file.
+     *
+     * @return list of tasks read from file
+     */
     public List<Task> load() {
         List<Task> tasks = new ArrayList<>();
         File file = new File(filePath);
@@ -46,6 +58,11 @@ public class Storage {
         return tasks;
     }
 
+    /**
+     * Saves tasks to the save file.
+     *
+     * @param tasks tasks to save
+     */
     public void save(List<Task> tasks) {
         try {
             File file = new File(filePath);
