@@ -5,7 +5,7 @@ import dume.util.DateTimeHelper;
 /**
  * Represents a task that must be done by a certain date/time.
  */
-public class Deadline extends Task{
+public class Deadline extends Task {
     private final String by;
 
     /**
