@@ -40,6 +40,18 @@ public abstract class Task {
         return done ? "X" : " ";
     }
 
+    /**
+     * Checks if this task's details contain the given query.
+     * The match is case-insensitive.
+     *
+     * @param query the keyword to search for
+     * @return true if details contain the query, false otherwise
+     */
+    public boolean matches(String query) {
+        if (query == null) return false;
+        return details.toLowerCase().contains(query.toLowerCase());
+    }
+
     @Override
     public String toString() {
         return "[" + statusIcon() + "] " + details;

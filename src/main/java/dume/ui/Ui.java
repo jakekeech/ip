@@ -50,6 +50,25 @@ public class Ui {
     }
 
     /**
+     * Displays the tasks that match a user's search query.
+     * If no matches are found, shows a friendly message instead.
+     *
+     * @param matches list of tasks that match the search keyword
+     */
+    public void showFound(List<Task> matches) {
+        System.out.println(LINE);
+        if (matches.isEmpty()) {
+            System.out.println("No matching tasks found.");
+        } else {
+            System.out.println("Here are the matching tasks found:");
+            for (int i = 0; i < matches.size(); i++) {
+                System.out.println((i + 1) + ". " + matches.get(i));
+            }
+        }
+        System.out.println(LINE);
+    }
+
+    /**
      * Displays an error message.
      *
      * @param message error text

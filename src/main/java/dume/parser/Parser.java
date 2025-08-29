@@ -9,6 +9,7 @@ import dume.task.TaskList;
 import dume.task.Todo;
 import dume.ui.Ui;
 
+import java.util.List;
 import java.util.Objects;
 
 /**
@@ -114,6 +115,17 @@ public class Parser {
             storage.save(tasks.asList());
             ui.say("Got it. I've added this task:\n  " + task
                     + "\nNow you have " + tasks.size() + " tasks in the list.");
+            return false;
+        }
+
+        if (lc.equals("find")) {
+            throw new DumeException("Please give a keyword after 'find'!");
+        }
+        if (lc.startsWith("find ")) {
+            String keyword = cmd.substring(5).trim();
+            if (keyword.isEmpty()) throw new DumeException("Please give a keyword after 'find'!");
+            List<Task> matches = tasks.find(keyword);
+            ui.showFound(matches);
             return false;
         }
 
