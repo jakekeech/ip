@@ -9,10 +9,27 @@ import dume.ui.Ui;
 import java.util.Scanner;
 
 /**
- * Entry point of application.
- * Initializes UI, storage, and task list before starting command loop.
+ * Main logic of the application.
+ * Initializes storage and task list, processes user commands.
  */
 public class Dume {
+    private Storage storage;
+    private TaskList tasks;
+    private Ui ui;
+
+    public Dume() {
+        ui = new Ui();
+        storage = new Storage("data/dume.txt");
+        tasks = new TaskList(storage.load());
+    }
+
+    public String getResponse(String input) {
+        try {
+            return Parser.processGui(input, tasks, ui, storage);
+        } catch (DumeException e) {
+            return e.getMessage();
+        }
+    }
 
     public static void main(String[] args) {
         String logo = """

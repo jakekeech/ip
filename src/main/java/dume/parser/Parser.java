@@ -132,6 +132,122 @@ public class Parser {
         throw new DumeException("Sorry! I don't understand!");
     }
 
+    public static String processGui(String raw, TaskList tasks, Ui ui, Storage storage) {
+        String cmd = Objects.requireNonNullElse(raw, "").trim();
+        String lc = cmd.toLowerCase();
+
+        if (lc.equals("bye")) {
+            storage.save(tasks.asList());
+            return "Bye. Hope to see you again soon!";
+        }
+
+        if (lc.equals("list")) {
+            List<Task> taskList = tasks.asList();
+            if (taskList.isEmpty()) {
+                return "No tasks yet...";
+            } else {
+                StringBuilder sb = new StringBuilder();
+                for (int i = 0; i < taskList.size(); i++) {
+                    sb.append((i + 1)).append(". ").append(taskList.get(i));
+                    if (i < taskList.size() - 1) sb.append("\n");
+                }
+                return sb.toString();
+            }
+        }
+
+        if (lc.equals("mark")) throw new DumeException("Please give a task number after 'mark'!");
+        if (lc.startsWith("mark ")) {
+            int id = parseIndexOrThrow(cmd.substring(5), tasks.size());
+            Task task = tasks.get(id);
+            task.mark();
+            storage.save(tasks.asList());
+            return "Nice! I've marked this task as done:\n  " + task;
+        }
+
+        if (lc.equals("unmark")) throw new DumeException("Please give a task number after 'unmark'!");
+        if (lc.startsWith("unmark ")) {
+            int id = parseIndexOrThrow(cmd.substring(7), tasks.size());
+            Task task = tasks.get(id);
+            task.unmark();
+            storage.save(tasks.asList());
+            return "OK, I've marked this task as not done yet:\n  " + task;
+        }
+
+        if (lc.equals("delete")) throw new DumeException("Please give a task number after 'delete'!");
+        if (lc.startsWith("delete ")) {
+            int id = parseIndexOrThrow(cmd.substring(7), tasks.size());
+            Task removed = tasks.remove(id);
+            storage.save(tasks.asList());
+            int n = tasks.size();
+            return "Noted. I've removed this task:\n  " + removed
+                    + "\nNow you have " + n + " task" + (n == 1 ? "" : "s") + " in the list.";
+        }
+
+        if (lc.startsWith("todo")) {
+            String details = (cmd.length() > 4) ? cmd.substring(4).trim() : "";
+            checkNonEmpty(details, "a todo");
+            Task task = new Todo(details);
+            tasks.add(task);
+            storage.save(tasks.asList());
+            return "Got it. I've added this task:\n  " + task
+                    + "\nNow you have " + tasks.size() + " tasks in the list.";
+        }
+
+        if (lc.startsWith("deadline")) {
+            String rest = (cmd.length() > 8) ? cmd.substring(8).trim() : "";
+            checkNonEmpty(rest, "a deadline");
+            String[] p = split(rest, "/by", "A deadline needs a /by time!");
+            String details = p[0].trim();
+            String by = p[1].trim();
+            checkNonEmpty(details, "a deadline");
+            checkNonEmpty(by, "the /by time");
+            Task task = new Deadline(details, by);
+            tasks.add(task);
+            storage.save(tasks.asList());
+            return "Got it. I've added this task:\n  " + task
+                    + "\nNow you have " + tasks.size() + " tasks in the list.";
+        }
+
+        if (lc.startsWith("event")) {
+            String rest = (cmd.length() > 5) ? cmd.substring(5).trim() : "";
+            checkNonEmpty(rest, "an event");
+            String[] p1 = split(rest, "/from", "An event needs /from and /to!");
+            String details = p1[0].trim();
+            String[] p2 = split(p1[1], "/to", "Missing /to for event!");
+            String from = p2[0].trim();
+            String to = p2[1].trim();
+            checkNonEmpty(details, "an event");
+            checkNonEmpty(from, "the /from time");
+            checkNonEmpty(to, "the /to time");
+            Task task = new Event(details, from, to);
+            tasks.add(task);
+            storage.save(tasks.asList());
+            return "Got it. I've added this task:\n  " + task
+                    + "\nNow you have " + tasks.size() + " tasks in the list.";
+        }
+
+        if (lc.equals("find")) {
+            throw new DumeException("Please give a keyword after 'find'!");
+        }
+        if (lc.startsWith("find ")) {
+            String keyword = cmd.substring(5).trim();
+            if (keyword.isEmpty()) throw new DumeException("Please give a keyword after 'find'!");
+            List<Task> matches = tasks.find(keyword);
+            if (matches.isEmpty()) {
+                return "No matching tasks found.";
+            } else {
+                StringBuilder sb = new StringBuilder("Here are the matching tasks found:\n");
+                for (int i = 0; i < matches.size(); i++) {
+                    sb.append((i + 1)).append(". ").append(matches.get(i));
+                    if (i < matches.size() - 1) sb.append("\n");
+                }
+                return sb.toString();
+            }
+        }
+
+        throw new DumeException("Sorry! I don't understand!");
+    }
+
     // helpers (same logic you had)
     private static String[] split(String text, String delim, String err) {
         String[] parts = text.split(delim, 2);
