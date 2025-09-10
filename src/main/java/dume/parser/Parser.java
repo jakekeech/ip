@@ -27,6 +27,10 @@ public class Parser {
      * @return true if the user wants to exit, false otherwise
      */
     public static boolean process(String raw, TaskList tasks, Ui ui, Storage storage) {
+        assert tasks != null : "TaskList cannot be null";
+        assert ui != null : "Ui cannot be null";
+        assert storage != null : "Storage cannot be null";
+        
         String cmd = Objects.requireNonNullElse(raw, "").trim();
         String lc = cmd.toLowerCase();
 
@@ -133,6 +137,10 @@ public class Parser {
     }
 
     public static String processGui(String raw, TaskList tasks, Ui ui, Storage storage) {
+        assert tasks != null : "TaskList cannot be null";
+        assert ui != null : "Ui cannot be null";
+        assert storage != null : "Storage cannot be null";
+        
         String cmd = Objects.requireNonNullElse(raw, "").trim();
         String lc = cmd.toLowerCase();
 
@@ -250,6 +258,10 @@ public class Parser {
 
     // helpers (same logic you had)
     private static String[] split(String text, String delim, String err) {
+        assert text != null : "Text cannot be null";
+        assert delim != null : "Delimiter cannot be null";
+        assert err != null : "Error message cannot be null";
+        
         String[] parts = text.split(delim, 2);
         if (parts.length < 2) throw new DumeException(err);
         return parts;
@@ -262,6 +274,9 @@ public class Parser {
     }
 
     private static int parseIndexOrThrow(String arg, int size) {
+        assert arg != null : "Argument cannot be null";
+        assert size >= 0 : "Size must be non-negative";
+        
         final int zeroBased;
         try { zeroBased = Integer.parseInt(arg.trim()) - 1; }
         catch (NumberFormatException e) { throw new DumeException("Please give a task number!"); }
