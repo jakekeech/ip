@@ -133,6 +133,35 @@ public class Parser {
             return false;
         }
 
+        if (lc.equals("sort")) {
+            throw new DumeException("Please specify how to sort: 'sort chrono', 'sort alpha', or 'sort status'!");
+        }
+        if (lc.startsWith("sort ")) {
+            String sortType = cmd.substring(5).trim().toLowerCase();
+            switch (sortType) {
+                case "chrono":
+                case "chronological":
+                    tasks.sortChronologically();
+                    storage.save(tasks.asList());
+                    ui.say("Tasks sorted chronologically (deadlines and events by date).");
+                    break;
+                case "alpha":
+                case "alphabetical":
+                    tasks.sortAlphabetically();
+                    storage.save(tasks.asList());
+                    ui.say("Tasks sorted alphabetically.");
+                    break;
+                case "status":
+                    tasks.sortByStatus();
+                    storage.save(tasks.asList());
+                    ui.say("Tasks sorted by status (incomplete first, then completed).");
+                    break;
+                default:
+                    throw new DumeException("Unknown sort type! Use 'chrono', 'alpha', or 'status'.");
+            }
+            return false;
+        }
+
         throw new DumeException("Sorry! I don't understand!");
     }
 
@@ -250,6 +279,31 @@ public class Parser {
                     if (i < matches.size() - 1) sb.append("\n");
                 }
                 return sb.toString();
+            }
+        }
+
+        if (lc.equals("sort")) {
+            throw new DumeException("Please specify how to sort: 'sort chrono', 'sort alpha', or 'sort status'!");
+        }
+        if (lc.startsWith("sort ")) {
+            String sortType = cmd.substring(5).trim().toLowerCase();
+            switch (sortType) {
+                case "chrono":
+                case "chronological":
+                    tasks.sortChronologically();
+                    storage.save(tasks.asList());
+                    return "Tasks sorted chronologically (deadlines and events by date).";
+                case "alpha":
+                case "alphabetical":
+                    tasks.sortAlphabetically();
+                    storage.save(tasks.asList());
+                    return "Tasks sorted alphabetically.";
+                case "status":
+                    tasks.sortByStatus();
+                    storage.save(tasks.asList());
+                    return "Tasks sorted by status (incomplete first, then completed).";
+                default:
+                    throw new DumeException("Unknown sort type! Use 'chrono', 'alpha', or 'status'.");
             }
         }
 

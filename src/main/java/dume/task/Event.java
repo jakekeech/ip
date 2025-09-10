@@ -30,6 +30,24 @@ public class Event extends Task {
     }
 
     /**
+     * Gets the start time of this event.
+     *
+     * @return the start date/time string
+     */
+    public String getFrom() {
+        return start;
+    }
+
+    /**
+     * Gets the end time of this event.
+     *
+     * @return the end date/time string
+     */
+    public String getTo() {
+        return end;
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override
