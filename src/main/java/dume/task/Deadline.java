@@ -25,6 +25,15 @@ public class Deadline extends Task {
     }
 
     /**
+     * Gets the deadline time for this task.
+     *
+     * @return the deadline date/time string
+     */
+    public String getBy() {
+        return by;
+    }
+
+    /**
      * {@inheritDoc}
      */
     @Override
