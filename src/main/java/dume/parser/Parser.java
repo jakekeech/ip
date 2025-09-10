@@ -27,6 +27,10 @@ public class Parser {
      * @return true if the user wants to exit, false otherwise
      */
     public static boolean process(String raw, TaskList tasks, Ui ui, Storage storage) {
+        assert tasks != null : "TaskList cannot be null";
+        assert ui != null : "Ui cannot be null";
+        assert storage != null : "Storage cannot be null";
+        
         String cmd = Objects.requireNonNullElse(raw, "").trim();
         String lc = cmd.toLowerCase();
 
