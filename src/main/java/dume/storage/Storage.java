@@ -31,8 +31,9 @@ public class Storage {
 
     /**
      * Loads tasks from the save file.
+     * Creates the parent directory if it doesn't exist.
      *
-     * @return list of tasks read from file
+     * @return list of tasks read from file, empty list if file doesn't exist
      */
     public List<Task> load() {
         List<Task> tasks = new ArrayList<>();
