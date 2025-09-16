@@ -14,6 +14,11 @@ import java.util.Objects;
 
 /**
  * Parses user input and executes the corresponding commands.
+ * 
+ * AI Assistance: Claude Code helped improve error handling for sort commands by:
+ * - Adding validation for empty sort parameters
+ * - Enhancing error messages to include the invalid sort type
+ * - Ensuring consistent error handling between CLI and GUI modes
  */
 public class Parser {
 
@@ -138,6 +143,9 @@ public class Parser {
         }
         if (lc.startsWith("sort ")) {
             String sortType = cmd.substring(5).trim().toLowerCase();
+            if (sortType.isEmpty()) {
+                throw new DumeException("Please specify how to sort: 'sort chrono', 'sort alpha', or 'sort status'!");
+            }
             switch (sortType) {
                 case "chrono":
                 case "chronological":
@@ -157,7 +165,7 @@ public class Parser {
                     ui.say("Tasks sorted by status (incomplete first, then completed).");
                     break;
                 default:
-                    throw new DumeException("Unknown sort type! Use 'chrono', 'alpha', or 'status'.");
+                    throw new DumeException("Unknown sort type '" + sortType + "'! Use 'chrono', 'alpha', or 'status'.");
             }
             return false;
         }
@@ -287,6 +295,9 @@ public class Parser {
         }
         if (lc.startsWith("sort ")) {
             String sortType = cmd.substring(5).trim().toLowerCase();
+            if (sortType.isEmpty()) {
+                throw new DumeException("Please specify how to sort: 'sort chrono', 'sort alpha', or 'sort status'!");
+            }
             switch (sortType) {
                 case "chrono":
                 case "chronological":
@@ -303,7 +314,7 @@ public class Parser {
                     storage.save(tasks.asList());
                     return "Tasks sorted by status (incomplete first, then completed).";
                 default:
-                    throw new DumeException("Unknown sort type! Use 'chrono', 'alpha', or 'status'.");
+                    throw new DumeException("Unknown sort type '" + sortType + "'! Use 'chrono', 'alpha', or 'status'.");
             }
         }
 
