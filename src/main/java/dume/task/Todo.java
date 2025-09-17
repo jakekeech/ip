@@ -23,6 +23,6 @@ public class Todo extends Task {
      */
     @Override
     public String toFileFormat() {
-        return "T | " + (done ? "1" : "0") + " | " + details;
+        return "T | " + (isCompleted ? "1" : "0") + " | " + details;
     }
 }

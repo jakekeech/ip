@@ -49,12 +49,12 @@ public class Dume {
         ui.welcome(logo);
 
         Scanner sc = new Scanner(System.in);
-        boolean exit = false;
+        boolean shouldExit = false;
 
-        while (!exit && sc.hasNextLine()) {
+        while (!shouldExit && sc.hasNextLine()) {
             String input = sc.nextLine();
             try {
-                exit = Parser.process(input, tasks, ui, storage);
+                shouldExit = Parser.process(input, tasks, ui, storage);
             } catch (DumeException e) {
                 ui.showError(e.getMessage());
             }

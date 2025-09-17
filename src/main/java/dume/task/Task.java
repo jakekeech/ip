@@ -5,7 +5,7 @@ package dume.task;
  */
 public abstract class Task {
     protected final String details;
-    protected boolean done;
+    protected boolean isCompleted;
 
     /**
      * Constructs a new task.
@@ -14,21 +14,21 @@ public abstract class Task {
      */
     public Task(String details) {
         this.details = details;
-        this.done = false;
+        this.isCompleted = false;
     }
 
     /**
      * Marks this task as done.
      */
     public void mark() {
-        this.done = true;
+        this.isCompleted = true;
     }
 
     /**
      * Marks this task as not done.
      */
     public void unmark() {
-        this.done = false;
+        this.isCompleted = false;
     }
 
     /**
@@ -37,7 +37,7 @@ public abstract class Task {
      * @return "X" if task is completed, otherwise " " (space)
      */
     public String getStatusIcon() {
-        return done ? "X" : " ";
+        return isCompleted ? "X" : " ";
     }
 
     /**
@@ -46,7 +46,7 @@ public abstract class Task {
      * @return true if task is marked as done, false otherwise
      */
     public boolean isDone() {
-        return done;
+        return isCompleted;
     }
 
     /**

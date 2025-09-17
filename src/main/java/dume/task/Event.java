@@ -52,6 +52,6 @@ public class Event extends Task {
      */
     @Override
     public String toFileFormat() {
-        return "E | " + (done ? "1" : "0") + " | " + details + " | " + start + " to " + end;
+        return "E | " + (isCompleted ? "1" : "0") + " | " + details + " | " + start + " to " + end;
     }
 }

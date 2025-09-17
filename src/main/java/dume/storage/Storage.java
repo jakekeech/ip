@@ -82,19 +82,19 @@ public class Storage {
     private Task parse(String line) {
         String[] parts = line.split(" \\| ");
         String type = parts[0];
-        boolean done = parts[1].equals("1");
+        boolean isTaskCompleted = parts[1].equals("1");
         String details = parts[2];
 
         switch (type) {
             case "T":
                 Todo todo = new Todo(details);
-                if (done) {
+                if (isTaskCompleted) {
                     todo.mark();
                 }
                 return todo;
             case "D":
                 Deadline deadline = new Deadline(details, parts[3]);
-                if (done) {
+                if (isTaskCompleted) {
                     deadline.mark();
                 }
                 return deadline;
@@ -103,7 +103,7 @@ public class Storage {
                 String start = times.length > 0 ? times[0] : "";
                 String end = times.length > 1 ? times[1] : "";
                 Event event = new Event(details, start, end);
-                if (done) {
+                if (isTaskCompleted) {
                     event.mark();
                 }
                 return event;

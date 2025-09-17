@@ -38,6 +38,6 @@ public class Deadline extends Task {
      */
     @Override
     public String toFileFormat() {
-        return "D | " + (done ? "1" : "0") + " | " + details + " | " + by;
+        return "D | " + (isCompleted ? "1" : "0") + " | " + details + " | " + by;
     }
 }
