@@ -50,35 +50,16 @@ public class Parser {
             return false;
         }
 
-        if (lc.equals("mark")) throw new DumeException("Please give a task number after 'mark'!");
-        if (lc.startsWith("mark ")) {
-            int id = parseIndexOrThrow(cmd.substring(5), tasks.size());
-            Task task = tasks.get(id);
-            task.mark();
-            storage.save(tasks.asList());
-            ui.say("Nice! I've marked this task as done:\n  " + task);
-            return false;
+        if (lc.equals("mark") || lc.startsWith("mark ")) {
+            return handleMarkCommand(lc, tasks, ui, storage);
         }
 
-        if (lc.equals("unmark")) throw new DumeException("Please give a task number after 'unmark'!");
-        if (lc.startsWith("unmark ")) {
-            int id = parseIndexOrThrow(cmd.substring(7), tasks.size());
-            Task task = tasks.get(id);
-            task.unmark();
-            storage.save(tasks.asList());
-            ui.say("OK, I've marked this task as not done yet:\n  " + task);
-            return false;
+        if (lc.equals("unmark") || lc.startsWith("unmark ")) {
+            return handleUnmarkCommand(lc, tasks, ui, storage);
         }
 
-        if (lc.equals("delete")) throw new DumeException("Please give a task number after 'delete'!");
-        if (lc.startsWith("delete ")) {
-            int id = parseIndexOrThrow(cmd.substring(7), tasks.size());
-            Task removed = tasks.remove(id);
-            storage.save(tasks.asList());
-            int n = tasks.size();
-            ui.say("Noted. I've removed this task:\n  " + removed
-                    + "\nNow you have " + n + " task" + (n == 1 ? "" : "s") + " in the list.");
-            return false;
+        if (lc.equals("delete") || lc.startsWith("delete ")) {
+            return handleDeleteCommand(lc, tasks, ui, storage);
         }
 
         if (lc.startsWith("todo")) {
@@ -200,32 +181,16 @@ public class Parser {
             }
         }
 
-        if (lc.equals("mark")) throw new DumeException("Please give a task number after 'mark'!");
-        if (lc.startsWith("mark ")) {
-            int id = parseIndexOrThrow(cmd.substring(5), tasks.size());
-            Task task = tasks.get(id);
-            task.mark();
-            storage.save(tasks.asList());
-            return "Nice! I've marked this task as done:\n  " + task;
+        if (lc.equals("mark") || lc.startsWith("mark ")) {
+            return handleMarkCommandGui(lc, tasks, storage);
         }
 
-        if (lc.equals("unmark")) throw new DumeException("Please give a task number after 'unmark'!");
-        if (lc.startsWith("unmark ")) {
-            int id = parseIndexOrThrow(cmd.substring(7), tasks.size());
-            Task task = tasks.get(id);
-            task.unmark();
-            storage.save(tasks.asList());
-            return "OK, I've marked this task as not done yet:\n  " + task;
+        if (lc.equals("unmark") || lc.startsWith("unmark ")) {
+            return handleUnmarkCommandGui(lc, tasks, storage);
         }
 
-        if (lc.equals("delete")) throw new DumeException("Please give a task number after 'delete'!");
-        if (lc.startsWith("delete ")) {
-            int id = parseIndexOrThrow(cmd.substring(7), tasks.size());
-            Task removed = tasks.remove(id);
-            storage.save(tasks.asList());
-            int n = tasks.size();
-            return "Noted. I've removed this task:\n  " + removed
-                    + "\nNow you have " + n + " task" + (n == 1 ? "" : "s") + " in the list.";
+        if (lc.equals("delete") || lc.startsWith("delete ")) {
+            return handleDeleteCommandGui(lc, tasks, storage);
         }
 
         if (lc.startsWith("todo")) {
@@ -319,6 +284,93 @@ public class Parser {
         }
 
         throw new DumeException("Sorry! I don't understand!");
+    }
+
+    // Command handlers for better abstraction
+    private static boolean handleMarkCommand(String cmd, TaskList tasks, Ui ui, Storage storage) {
+        if (cmd.equals("mark")) {
+            throw new DumeException("Please give a task number after 'mark'!");
+        }
+        if (cmd.startsWith("mark ")) {
+            int id = parseIndexOrThrow(cmd.substring(5), tasks.size());
+            Task task = tasks.get(id);
+            task.mark();
+            storage.save(tasks.asList());
+            ui.say("Nice! I've marked this task as done:\n  " + task);
+        }
+        return false;
+    }
+
+    private static String handleMarkCommandGui(String cmd, TaskList tasks, Storage storage) {
+        if (cmd.equals("mark")) {
+            throw new DumeException("Please give a task number after 'mark'!");
+        }
+        if (cmd.startsWith("mark ")) {
+            int id = parseIndexOrThrow(cmd.substring(5), tasks.size());
+            Task task = tasks.get(id);
+            task.mark();
+            storage.save(tasks.asList());
+            return "Nice! I've marked this task as done:\n  " + task;
+        }
+        return null;
+    }
+
+    private static boolean handleUnmarkCommand(String cmd, TaskList tasks, Ui ui, Storage storage) {
+        if (cmd.equals("unmark")) {
+            throw new DumeException("Please give a task number after 'unmark'!");
+        }
+        if (cmd.startsWith("unmark ")) {
+            int id = parseIndexOrThrow(cmd.substring(7), tasks.size());
+            Task task = tasks.get(id);
+            task.unmark();
+            storage.save(tasks.asList());
+            ui.say("OK, I've marked this task as not done yet:\n  " + task);
+        }
+        return false;
+    }
+
+    private static String handleUnmarkCommandGui(String cmd, TaskList tasks, Storage storage) {
+        if (cmd.equals("unmark")) {
+            throw new DumeException("Please give a task number after 'unmark'!");
+        }
+        if (cmd.startsWith("unmark ")) {
+            int id = parseIndexOrThrow(cmd.substring(7), tasks.size());
+            Task task = tasks.get(id);
+            task.unmark();
+            storage.save(tasks.asList());
+            return "OK, I've marked this task as not done yet:\n  " + task;
+        }
+        return null;
+    }
+
+    private static boolean handleDeleteCommand(String cmd, TaskList tasks, Ui ui, Storage storage) {
+        if (cmd.equals("delete")) {
+            throw new DumeException("Please give a task number after 'delete'!");
+        }
+        if (cmd.startsWith("delete ")) {
+            int id = parseIndexOrThrow(cmd.substring(7), tasks.size());
+            Task removed = tasks.remove(id);
+            storage.save(tasks.asList());
+            int n = tasks.size();
+            ui.say("Noted. I've removed this task:\n  " + removed
+                    + "\nNow you have " + n + " task" + (n == 1 ? "" : "s") + " in the list.");
+        }
+        return false;
+    }
+
+    private static String handleDeleteCommandGui(String cmd, TaskList tasks, Storage storage) {
+        if (cmd.equals("delete")) {
+            throw new DumeException("Please give a task number after 'delete'!");
+        }
+        if (cmd.startsWith("delete ")) {
+            int id = parseIndexOrThrow(cmd.substring(7), tasks.size());
+            Task removed = tasks.remove(id);
+            storage.save(tasks.asList());
+            int n = tasks.size();
+            return "Noted. I've removed this task:\n  " + removed
+                    + "\nNow you have " + n + " task" + (n == 1 ? "" : "s") + " in the list.";
+        }
+        return null;
     }
 
     // helpers (same logic you had)
