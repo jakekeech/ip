@@ -343,8 +343,11 @@ public class Parser {
         assert size >= 0 : "Size must be non-negative";
         
         final int zeroBased;
-        try { zeroBased = Integer.parseInt(arg.trim()) - 1; }
-        catch (NumberFormatException e) { throw new DumeException("Please give a task number!"); }
+        try {
+            zeroBased = Integer.parseInt(arg.trim()) - 1;
+        } catch (NumberFormatException e) {
+            throw new DumeException("Please give a task number!");
+        }
         if (zeroBased < 0 || zeroBased >= size) throw new DumeException("That task does not exist!");
         return zeroBased;
     }
